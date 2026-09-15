@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Compiled output (in case code examples get compiled/tested locally)
+*.o
+*.obj
+*.exe
+*.out
+a.out
+
+# Logs
+*.log
+
+# ------------------------------------------------------------
+# Force-track every .txt file, no matter what.
+# This repo grows over time -- every ChatGPT lesson gets saved
+# as a new .txt file as it's learned. This negation rule makes
+# sure no .txt file (current or future, anywhere in the repo)
+# is ever accidentally excluded by a rule above or added later.
+# ------------------------------------------------------------
+!*.txt
+!**/*.txt
