@@ -1,0 +1,299 @@
+============================================================
+LESSON 1 — INTRODUCTION TO C++
+============================================================
+
+1. WHAT IS A PROGRAMMING LANGUAGE?
+------------------------------------------------------------
+
+A computer's CPU ultimately executes machine-code instructions.
+
+Machine code consists of binary-encoded instructions that the
+CPU understands.
+
+Example conceptually:
+
+    01010110 10100101 ...
+
+Humans cannot realistically write large programs directly in
+machine code because:
+
+    - It is extremely difficult to read.
+    - It is extremely difficult to debug.
+    - A tiny mistake can cause incorrect behavior.
+    - It is difficult to maintain large programs.
+    - Machine code is specific to a CPU architecture.
+
+
+2. ASSEMBLY LANGUAGE
+------------------------------------------------------------
+
+Assembly provides human-readable mnemonics for machine
+instructions.
+
+Example:
+
+    MOV AX, 5
+    ADD AX, 10
+
+Assembly is easier than machine code but is still:
+
+    - Low-level
+    - Difficult to maintain for large programs
+    - Closely tied to a particular CPU architecture
+
+
+3. HIGH-LEVEL LANGUAGES
+------------------------------------------------------------
+
+Languages such as:
+
+    C
+    C++
+    Java
+    Python
+    Rust
+    Go
+
+allow humans to express algorithms and operations at a much
+higher level.
+
+Example:
+
+    int x = 5;
+
+
+4. C
+------------------------------------------------------------
+
+C was created by Dennis Ritchie around 1972.
+
+Important characteristics:
+
+    - High performance
+    - Low-level control
+    - Close relationship with hardware
+    - Suitable for system programming
+    - Much easier to write and maintain than Assembly
+
+
+5. C++
+------------------------------------------------------------
+
+C++ originated from Bjarne Stroustrup's work beginning around
+1979 and was initially known as "C with Classes."
+
+C++ was designed to retain much of C's performance and
+low-level control while providing higher-level programming
+features.
+
+Modern C++ contains features such as:
+
+    - Classes
+    - Object-oriented programming
+    - Templates
+    - Generic programming
+    - STL
+    - Lambdas
+    - Smart pointers
+    - Move semantics
+    - Concepts
+    - Ranges
+    - Concurrency
+
+
+6. WHY C++ IS POWERFUL
+------------------------------------------------------------
+
+C++ combines:
+
+    HIGH PERFORMANCE
+            +
+    LOW-LEVEL CONTROL
+            +
+    HIGH-LEVEL ABSTRACTIONS
+            +
+    LARGE STANDARD LIBRARY
+
+
+7. ZERO-COST ABSTRACTION
+------------------------------------------------------------
+
+An abstraction hides implementation details and provides a
+simpler interface.
+
+Example:
+
+    vector<int> v;
+
+A programmer can use vector without manually managing every
+allocation, resize operation, and element movement.
+
+C++ follows the philosophy of:
+
+    "You shouldn't pay for what you don't use."
+
+A zero-cost abstraction means that when an abstraction can be
+implemented without additional runtime overhead, the compiler
+should be able to generate code that is essentially as
+efficient as a lower-level implementation.
+
+Example:
+
+    inline int add(int a, int b)
+    {
+        return a + b;
+    }
+
+A compiler may replace:
+
+    add(5, 7)
+
+with the equivalent operation directly at the call site.
+
+Conceptually:
+
+    add(5, 7)
+        ↓
+    5 + 7
+
+This can eliminate function-call overhead.
+
+IMPORTANT:
+
+    - "inline" is not a command forcing the compiler to inline.
+    - It is primarily a language/ODR property and historically
+      an optimization hint.
+    - Modern compilers can inline functions without the
+      inline keyword.
+    - Inlining is not always beneficial because excessive
+      inlining can increase code size and hurt instruction-cache
+      behavior.
+
+Zero-cost abstraction DOES NOT mean:
+
+    "Everything is free."
+
+The actual work performed by a feature still has a cost.
+
+It means the abstraction itself should not impose unnecessary
+runtime overhead when the compiler can eliminate it.
+
+
+8. C++ STANDARDS
+------------------------------------------------------------
+
+C++ evolves through language standards.
+
+Major standards include:
+
+    C++98
+    C++03
+    C++11
+    C++14
+    C++17
+    C++20
+    C++23
+    C++26
+
+Important examples:
+
+    C++11:
+        - auto
+        - lambdas
+        - move semantics
+        - smart pointers
+        - range-based for loops
+
+    C++17:
+        - structured bindings
+        - if constexpr
+        - filesystem
+
+    C++20:
+        - concepts
+        - ranges
+        - coroutines
+        - many library improvements
+
+
+9. C++ PROGRAM COMPILATION PIPELINE
+------------------------------------------------------------
+
+A .cpp source file does NOT execute directly.
+
+Simplified pipeline:
+
+    .cpp source code
+          ↓
+    Preprocessor
+          ↓
+    Compiler
+          ↓
+    Assembly
+          ↓
+    Assembler
+          ↓
+    Object code
+          ↓
+    Linker
+          ↓
+    Executable
+          ↓
+    Operating System
+          ↓
+    CPU
+
+
+10. IMPORTANT IDEA
+------------------------------------------------------------
+
+The CPU does not understand:
+
+    if
+    for
+    vector
+    class
+    cout
+
+directly.
+
+These are C++ language constructs.
+
+Eventually they must be translated into machine-code
+instructions that the CPU can execute.
+
+
+11. MENTAL MODEL
+------------------------------------------------------------
+
+Think of programming language evolution as:
+
+    Machine Code
+         ↓
+    Assembly
+         ↓
+    C
+         ↓
+    C++
+
+Higher-level languages make programming easier for humans
+while compilers translate the code toward instructions that
+the machine can execute.
+
+
+12. KEY TAKEAWAYS
+------------------------------------------------------------
+
+    - CPU executes machine code.
+    - Assembly provides human-readable low-level instructions.
+    - C provides higher-level programming while retaining
+      strong low-level control.
+    - C++ extends the ideas of C with powerful abstractions
+      and modern language features.
+    - C++ is widely used where performance and control matter.
+    - Zero-cost abstraction means abstractions should not impose
+      unnecessary runtime overhead.
+    - The compiler can optimize abstractions heavily.
+    - A .cpp file must go through a compilation pipeline before
+      becoming an executable.
+============================================================

@@ -1,0 +1,549 @@
+============================================================
+LESSON 2 — THE C++ COMPILATION PROCESS
+============================================================
+
+
+1. SOURCE CODE
+------------------------------------------------------------
+
+A C++ program is normally written in a source file with a
+.cpp extension.
+
+Example:
+
+    main.cpp
+
+The CPU cannot execute C++ source code directly.
+
+The source code must be transformed into machine code first.
+
+
+2. COMPLETE SIMPLIFIED PIPELINE
+------------------------------------------------------------
+
+    C++ Source Code
+          │
+          ▼
+    Preprocessor
+          │
+          ▼
+    Translation Unit
+          │
+          ▼
+    Compiler
+          │
+          ▼
+    Assembly
+          │
+          ▼
+    Assembler
+          │
+          ▼
+    Object File
+          │
+          ▼
+    Linker
+          │
+          ▼
+    Executable
+          │
+          ▼
+    Operating System
+          │
+          ▼
+    CPU
+
+
+NOTE:
+
+The exact implementation of the toolchain can vary.
+
+For example, a compiler driver such as g++ may invoke the
+preprocessor, compiler, assembler, and linker automatically.
+
+
+3. PREPROCESSOR
+------------------------------------------------------------
+
+The preprocessor runs before the compiler performs normal
+C++ compilation.
+
+It processes preprocessing directives such as:
+
+    #include
+    #define
+    #if
+    #ifdef
+    #ifndef
+    #pragma
+
+The preprocessor performs source-level transformations.
+
+
+4. #include
+------------------------------------------------------------
+
+Example:
+
+    #include <iostream>
+
+Conceptually, the preprocessor makes the contents of the
+specified header available in the current translation unit.
+
+A useful beginner mental model is:
+
+    #include ≈ copy/paste the header contents
+
+However, the exact details of headers, declarations,
+definitions, templates, inline functions, and libraries are
+more complicated.
+
+IMPORTANT:
+
+    #include happens before normal compilation.
+
+
+5. <header> VS "header"
+------------------------------------------------------------
+
+Standard/system-style include:
+
+    #include <iostream>
+
+Quoted include:
+
+    #include "myfile.h"
+
+The two forms use different header-search rules.
+
+Generally:
+
+    <...>
+        Used for standard/system include paths.
+
+    "..."
+        Usually searches local/project paths first and then
+        other configured include paths.
+
+Example:
+
+    #include <vector>
+
+    #include "Student.h"
+
+
+6. #define
+------------------------------------------------------------
+
+#define creates a preprocessor macro.
+
+Example:
+
+    #define PI 3.141592653589793
+
+Then:
+
+    double x = PI;
+
+is transformed approximately into:
+
+    double x = 3.141592653589793;
+
+
+7. MACROS ARE TEXTUAL
+------------------------------------------------------------
+
+The preprocessor does not understand the C++ meaning of the
+text in the same way the compiler does.
+
+Example:
+
+    #define SQUARE(x) x*x
+
+Then:
+
+    SQUARE(2 + 3)
+
+can become:
+
+    2 + 3 * 2 + 3
+
+Because of operator precedence:
+
+    2 + (3 * 2) + 3
+    = 11
+
+NOT:
+
+    (2 + 3) * (2 + 3)
+    = 25
+
+
+A safer macro, if a macro were absolutely necessary, would be:
+
+    #define SQUARE(x) ((x) * (x))
+
+However, function templates, constexpr functions, and other
+C++ features are often preferable to function-like macros.
+
+
+8. TRANSLATION UNIT
+------------------------------------------------------------
+
+After preprocessing, the source file together with the
+included header contents and other preprocessing results forms
+a translation unit.
+
+The compiler compiles a translation unit as a unit.
+
+Example:
+
+    main.cpp
+        +
+    included headers
+        +
+    preprocessing results
+        ↓
+    translation unit
+
+
+9. COMPILER
+------------------------------------------------------------
+
+The compiler analyzes the C++ program.
+
+It performs tasks such as:
+
+    - Parsing the source
+    - Checking syntax
+    - Checking types
+    - Performing semantic analysis
+    - Applying optimizations
+    - Generating lower-level code
+
+Example:
+
+    int x = "Hello";
+
+The compiler can diagnose this because the types are
+incompatible.
+
+
+10. COMPILER ERRORS
+------------------------------------------------------------
+
+Examples:
+
+    Missing semicolon:
+
+        int x = 10
+
+    Undefined identifier:
+
+        cout << unknownVariable;
+
+    Invalid type conversion:
+
+        int x = "Hello";
+
+These are generally diagnosed during compilation.
+
+
+11. ASSEMBLER
+------------------------------------------------------------
+
+The compiler may generate assembly language as an intermediate
+low-level representation.
+
+Example conceptually:
+
+    C++ code
+        ↓
+    Assembly
+
+The assembler then converts assembly instructions into machine
+code contained in an object file.
+
+
+12. OBJECT FILE
+------------------------------------------------------------
+
+The assembler produces an object file.
+
+Common extensions include:
+
+    .o      (Linux/Unix)
+    .obj    (Windows toolchains)
+
+An object file contains machine code and additional information
+needed for later stages.
+
+A large project can contain many object files:
+
+    main.o
+    player.o
+    enemy.o
+    physics.o
+    graphics.o
+
+
+13. LINKER
+------------------------------------------------------------
+
+The linker combines object files and libraries into a final
+executable.
+
+Its major responsibilities include:
+
+    - Combining object files
+    - Resolving references
+    - Connecting declarations/references with definitions
+    - Incorporating required library code
+    - Producing the final executable
+
+
+14. DECLARATION VS DEFINITION
+------------------------------------------------------------
+
+Suppose we write:
+
+    int add(int, int);
+
+This tells the compiler that a function with this signature
+exists.
+
+This is a declaration.
+
+The actual implementation might be:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+This provides the definition.
+
+
+15. LINKER ERROR
+------------------------------------------------------------
+
+Consider:
+
+    int add(int, int);
+
+    int main()
+    {
+        return add(2, 3);
+    }
+
+The compiler can understand this because add() has been
+declared.
+
+But if no definition of add() exists, the linker cannot find
+the actual function implementation.
+
+The result may be an error such as:
+
+    undefined reference to `add(...)`
+
+Therefore:
+
+    Compilation can succeed
+    but linking can fail.
+
+
+16. COMPILER ERROR VS LINKER ERROR
+------------------------------------------------------------
+
+Compiler error:
+
+    Problem detected while compiling source code.
+
+Examples:
+
+    - Syntax error
+    - Type error
+    - Invalid expression
+    - Unknown identifier
+
+
+Linker error:
+
+    Problem encountered while constructing the final executable.
+
+Examples:
+
+    - Missing function definition
+    - Missing library
+    - Unresolved external symbol
+    - Multiple conflicting definitions
+
+
+17. WHY SEPARATE COMPILATION AND LINKING?
+------------------------------------------------------------
+
+Large programs are split into multiple source files.
+
+Example:
+
+    main.cpp
+    player.cpp
+    enemy.cpp
+    physics.cpp
+    graphics.cpp
+
+They can be compiled separately:
+
+    main.cpp      → main.o
+    player.cpp    → player.o
+    enemy.cpp     → enemy.o
+    physics.cpp   → physics.o
+    graphics.cpp  → graphics.o
+
+Then the linker combines them:
+
+    main.o
+    player.o
+    enemy.o
+    physics.o
+    graphics.o
+            ↓
+         LINKER
+            ↓
+        program.exe
+
+
+This makes large projects manageable.
+
+If player.cpp changes, a build system can often recompile only
+the affected source file(s), then link the updated object files.
+
+
+18. HEADER FILES
+------------------------------------------------------------
+
+Headers commonly contain things such as:
+
+    - Declarations
+    - Class definitions
+    - Function declarations
+    - Templates
+    - Inline function definitions
+    - Type aliases
+    - Macros
+    - Constants
+
+Example:
+
+    // math.h
+
+    int add(int a, int b);
+
+
+Then another source file can use:
+
+    #include "math.h"
+
+    int main()
+    {
+        return add(2, 3);
+    }
+
+
+19. IMPORTANT MENTAL MODEL
+------------------------------------------------------------
+
+Think of the compilation process as a factory.
+
+    SOURCE CODE
+        │
+        ▼
+    PREPROCESSOR
+        │
+        │ prepares/transforms source
+        ▼
+    COMPILER
+        │
+        │ understands C++ and generates lower-level code
+        ▼
+    ASSEMBLER
+        │
+        │ creates machine-code object file
+        ▼
+    OBJECT FILE
+        │
+        ▼
+    LINKER
+        │
+        │ connects separate compiled pieces
+        ▼
+    EXECUTABLE
+
+
+20. KEY TAKEAWAYS
+------------------------------------------------------------
+
+    - A .cpp file is source code, not executable code.
+    - The CPU cannot directly execute C++ source.
+    - The preprocessor handles preprocessing directives.
+    - #include makes header contents available to the
+      translation unit.
+    - #define creates textual preprocessor macros.
+    - A translation unit is the result of preprocessing a
+      source file and its included material.
+    - The compiler translates and analyzes C++.
+    - The assembler produces object code from assembly.
+    - Object files contain compiled machine code plus
+      information needed by later stages.
+    - The linker combines object files and libraries.
+    - Compiler errors and linker errors are different.
+    - A program can compile successfully but fail during
+      linking.
+    - Separate compilation makes large projects manageable.
+============================================================
+
+Diagram:
+
+                  C++ BUILD PIPELINE
+
+       main.cpp
+          │
+          ▼
+   ┌───────────────┐
+   │ PREPROCESSOR  │
+   └───────┬───────┘
+           │
+           ▼
+    Translation Unit
+           │
+           ▼
+   ┌───────────────┐
+   │    COMPILER   │
+   └───────┬───────┘
+           │
+           ▼
+       Assembly
+           │
+           ▼
+   ┌───────────────┐
+   │   ASSEMBLER   │
+   └───────┬───────┘
+           │
+           ▼
+      Object File
+           │
+           │      Other object files
+           │           │
+           │           ▼
+           └──────► ┌──────────┐
+                    │  LINKER  │
+                    └────┬─────┘
+                         │
+                         ▼
+                    executable
+                         │
+                         ▼
+                         OS
+                         │
+                         ▼
+                        CPU

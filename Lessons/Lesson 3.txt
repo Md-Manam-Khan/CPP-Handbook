@@ -1,0 +1,695 @@
+============================================================
+LESSON 3 — main(), STATEMENTS, EXPRESSIONS, BLOCKS
+           & PROGRAM STRUCTURE
+============================================================
+
+
+1. main()
+------------------------------------------------------------
+
+main() is the entry point of a normal C++ program.
+
+Example:
+
+    int main()
+    {
+        // program execution begins here
+    }
+
+The operating system starts the program, and execution
+eventually enters main().
+
+main() is a special function defined by the C++ language.
+
+
+2. int main()
+------------------------------------------------------------
+
+In:
+
+    int main()
+
+the parts mean:
+
+    int
+        The return type of the function.
+
+    main
+        The special name of the program's entry-point function.
+
+    ()
+        The parameter list.
+
+main() returns an integer to the execution environment.
+
+
+3. return 0
+------------------------------------------------------------
+
+Example:
+
+    int main()
+    {
+        return 0;
+    }
+
+The return value of main() is used as the program's exit status.
+
+Conventionally:
+
+    0
+        Successful termination.
+
+    Non-zero
+        Commonly indicates some kind of failure.
+
+The exact meaning of non-zero values depends on the program
+and operating environment.
+
+
+4. END OF main()
+------------------------------------------------------------
+
+For main(), reaching the closing brace:
+
+    }
+
+is equivalent to returning 0.
+
+Therefore:
+
+    int main()
+    {
+    }
+
+is valid.
+
+It is effectively equivalent to:
+
+    int main()
+    {
+        return 0;
+    }
+
+
+5. BLOCKS
+------------------------------------------------------------
+
+A block is a sequence of statements enclosed by:
+
+    {
+        ...
+    }
+
+Example:
+
+    int main()
+    {
+        int x = 10;
+        int y = 20;
+    }
+
+The code between { and } belongs to the block.
+
+Blocks are used with:
+
+    - Functions
+    - if statements
+    - loops
+    - other control-flow constructs
+    - nested scopes
+
+
+6. NESTED BLOCKS
+------------------------------------------------------------
+
+Blocks can exist inside other blocks.
+
+Example:
+
+    int main()
+    {
+        int x = 10;
+
+        {
+            int y = 20;
+        }
+    }
+
+The inner block is nested inside the outer block.
+
+
+7. SCOPE
+------------------------------------------------------------
+
+A scope is a region of a program in which a name can be
+used according to C++'s scope rules.
+
+Example:
+
+    int main()
+    {
+        int x = 10;
+
+        {
+            int y = 20;
+        }
+
+        cout << x;
+    }
+
+x can be used in the outer block.
+
+y belongs to the inner block and cannot normally be accessed
+after that inner block ends.
+
+Scope becomes extremely important when working with:
+
+    - Variables
+    - Functions
+    - Classes
+    - Namespaces
+    - Loops
+    - References
+    - Templates
+
+
+8. STATEMENTS
+------------------------------------------------------------
+
+A statement is a complete construct that performs an action
+or represents a declaration/control-flow operation.
+
+Examples:
+
+    int x = 10;
+
+    x = x + 5;
+
+    return 0;
+
+Many C++ statements end with:
+
+    ;
+
+
+9. SEMICOLON
+------------------------------------------------------------
+
+The semicolon generally terminates a statement.
+
+Example:
+
+    int x = 10;
+    int y = 20;
+
+Each declaration is a separate statement.
+
+The semicolon tells the compiler where that statement ends.
+
+IMPORTANT:
+
+Not every C++ construct is followed by a semicolon.
+
+For example:
+
+    if (x > 5)
+    {
+        cout << x;
+    }
+
+There is no semicolon after the closing brace of the if block.
+
+
+10. EXPRESSIONS
+------------------------------------------------------------
+
+An expression is a construct that can be evaluated and has a
+result/value according to C++'s expression rules.
+
+Examples:
+
+    5
+
+    x
+
+    x + 5
+
+    a * b + c
+
+    x > 10
+
+    x = 20
+
+
+11. EXPRESSION VS STATEMENT
+------------------------------------------------------------
+
+Consider:
+
+    x = 10;
+
+The expression is:
+
+    x = 10
+
+The complete expression statement is:
+
+    x = 10;
+
+Therefore:
+
+    Expression
+        ↓
+    x = 10
+
+    Expression statement
+        ↓
+    x = 10;
+
+
+12. ASSIGNMENT IS AN EXPRESSION
+------------------------------------------------------------
+
+In C++, assignment is itself an expression.
+
+Example:
+
+    b = 10
+
+The assignment produces a result.
+
+Therefore this is valid:
+
+    a = b = 10;
+
+Conceptually:
+
+    b = 10
+       ↓
+    produces 10
+       ↓
+    a = 10
+
+Afterwards:
+
+    a == 10
+    b == 10
+
+
+13. OPERATORS
+------------------------------------------------------------
+
+Operators are symbols/tokens that represent operations or
+participate in operations.
+
+Examples:
+
+    Arithmetic:
+
+        +
+        -
+        *
+        /
+        %
+
+    Comparison:
+
+        ==
+        !=
+        <
+        >
+        <=
+        >=
+
+    Logical:
+
+        &&
+        ||
+        !
+
+    Assignment:
+
+        =
+        +=
+        -=
+        *=
+        /=
+
+    Increment/decrement:
+
+        ++
+        --
+
+    Bitwise:
+
+        &
+        |
+        ^
+        ~
+        <<
+        >>
+
+C++ also allows operators to be overloaded for user-defined
+types.
+
+
+14. std
+------------------------------------------------------------
+
+The C++ Standard Library places its names inside the:
+
+    std
+
+namespace.
+
+Example:
+
+    std::cout
+    std::cin
+    std::vector
+    std::string
+    std::sort
+
+
+15. NAMESPACE ACCESS
+------------------------------------------------------------
+
+The expression:
+
+    std::cout
+
+means:
+
+    cout from the std namespace.
+
+
+16. SCOPE RESOLUTION OPERATOR ::
+------------------------------------------------------------
+
+The:
+
+    ::
+
+operator is called the scope resolution operator.
+
+It is used to specify which scope a name belongs to.
+
+Example:
+
+    std::cout
+
+means:
+
+    cout inside namespace std.
+
+The scope resolution operator has many other uses in C++,
+including accessing:
+
+    - Namespace members
+    - Static class members
+    - Class member definitions
+    - Global variables hidden by local variables
+
+These uses will be studied later.
+
+
+17. std::cout
+------------------------------------------------------------
+
+Example:
+
+    std::cout << "Hello World!";
+
+cout is an output stream object associated with standard output.
+
+The:
+
+    <<
+
+operator is used with streams to insert data into the output
+stream.
+
+For example:
+
+    std::cout << 10;
+
+    std::cout << "Hello";
+
+The meaning of an operator can depend on its operands.
+
+
+18. OPERATOR OVERLOADING
+------------------------------------------------------------
+
+C++ allows operators to have specialized behavior for
+user-defined types.
+
+For example:
+
+    +
+
+normally performs arithmetic addition.
+
+But a class can define what + means for its objects.
+
+Similarly:
+
+    <<
+
+is used for stream output with objects such as std::cout.
+
+Operator overloading will be studied in detail later.
+
+
+19. CASE SENSITIVITY
+------------------------------------------------------------
+
+C++ is case-sensitive.
+
+These are different identifiers:
+
+    value
+    Value
+    VALUE
+    VaLuE
+
+Similarly:
+
+    main
+    Main
+    MAIN
+
+are different names.
+
+Correct capitalization is therefore important.
+
+
+20. COMMENTS
+------------------------------------------------------------
+
+Comments are ignored as program instructions.
+
+Single-line comment:
+
+    // This is a comment
+
+Multi-line comment:
+
+    /*
+        This is
+        a comment.
+    */
+
+
+21. COMMENT EXAMPLE
+------------------------------------------------------------
+
+    int x = 10;
+
+    // x = 100;
+
+    cout << x;
+
+The commented assignment does not execute.
+
+The program prints:
+
+    10
+
+
+22. PROGRAM EXECUTION ORDER
+------------------------------------------------------------
+
+In a simple sequential program, statements execute in order.
+
+Example:
+
+    int main()
+    {
+        int x = 10;
+        int y = 20;
+
+        cout << x;
+        cout << y;
+
+        return 0;
+    }
+
+Conceptually:
+
+    Enter main()
+         ↓
+    Create/initialize x
+         ↓
+    Create/initialize y
+         ↓
+    Output x
+         ↓
+    Output y
+         ↓
+    return 0
+         ↓
+    Program terminates
+
+
+23. DECLARATION
+------------------------------------------------------------
+
+A declaration introduces a name and tells the compiler about
+an entity.
+
+Example:
+
+    int add(int, int);
+
+This tells the compiler that a function named add exists with
+two int parameters and an int return type.
+
+This is a function declaration.
+
+
+24. DEFINITION
+------------------------------------------------------------
+
+A definition provides the entity itself.
+
+Example:
+
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+This defines the function and provides its implementation.
+
+A definition is also a declaration, but not every declaration
+is a definition.
+
+
+25. INITIALIZATION
+------------------------------------------------------------
+
+Initialization gives an object its initial value when it is
+created.
+
+Example:
+
+    int x = 10;
+
+Here:
+
+    int
+        Type
+
+    x
+        Name
+
+    10
+        Initial value
+
+
+26. COMPLETE PROGRAM DISSECTION
+------------------------------------------------------------
+
+Example:
+
+    #include <iostream>
+
+    int main()
+    {
+        std::cout << "Hello World!";
+        return 0;
+    }
+
+
+    #include <iostream>
+        Preprocessor directive.
+
+
+    int main()
+        Defines the program's entry-point function.
+
+
+    {
+        Begins main's block.
+
+
+    std::cout << "Hello World!";
+        An expression statement that sends output to
+        standard output.
+
+
+    return 0;
+        Returns status 0 from main.
+
+
+    }
+        Ends main's block.
+
+
+27. SIMPLE C++ PROGRAM HIERARCHY
+------------------------------------------------------------
+
+A useful mental model:
+
+                C++ PROGRAM
+                     │
+                ┌────┴────┐
+                │         │
+          Declarations   main()
+                           │
+                       ┌───┴───┐
+                       │       │
+                   Statement Statement
+                       │       │
+                   Expression Expression
+
+
+This is a simplified mental model, not a complete description
+of the C++ grammar.
+
+
+28. KEY TAKEAWAYS
+------------------------------------------------------------
+
+    - main() is the entry point of a normal C++ program.
+    - int main() means main returns an integer.
+    - return 0 indicates successful termination by convention.
+    - Reaching the end of main returns 0.
+    - { } creates a block.
+    - Blocks contribute to scope.
+    - A statement is a complete language construct.
+    - Many statements end with ;.
+    - An expression can be evaluated and has a result/value
+      according to C++ expression rules.
+    - Assignment is an expression in C++.
+    - Operators perform or participate in operations.
+    - std is the Standard Library namespace.
+    - :: is the scope resolution operator.
+    - C++ is case-sensitive.
+    - Comments are ignored as executable instructions.
+    - Declarations introduce information about entities.
+    - Definitions provide the entity itself.
+    - Initialization gives an object its initial value.
+============================================================
